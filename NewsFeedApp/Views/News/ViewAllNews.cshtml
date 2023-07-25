@@ -1,0 +1,44 @@
+﻿@model NewsFeedApplication.Models.NewsViewModel
+
+@{
+	ViewBag.Title = "View All News";
+}
+<h2>@ViewBag.Title</h2>
+
+<div class="detail-box ">
+	@if (Session["IsAdmin"].ToString() == "true")
+	{
+		<div class="text-right py-2">
+			<button type="button" id="btnAddNews" class="btn btn-danger toggle-row mb-1rem">Add New Book</button>
+		</div>
+	}
+	<div class="table-responsive" style="max-height: inherit" id="newsList">
+		@Html.Partial("~/Views/News/Partials/_NewsList.cshtml", Model.NewsList)
+	</div>
+	<input type="hidden" id="hdnUserId" value="@Model.UserId" />
+
+</div>
+<script>
+	$(document).ready(function () {
+		if ($('#hdnUserId').val() != '') {
+			$('#btnLogin').hide();
+			$('#btnLogout').show();
+		} else {
+			$('#btnLogin').show();
+			$('#btnLogout').hide();
+		}
+        $('#btnAddNews').on("click", function (e) {
+			window.location.href = '@VirtualPathUtility.ToAbsolute("~/")news/AddNews/';
+		});
+
+		$(".login-form").on("submit", function (e) {
+			e.preventDefault();  // prevent standard form submission
+			var messageBox = $(this).find('.MessageBox');
+			messageBox.hide();
+
+			$(".loader-wrapper").show();
+
+			$(".loader-wrapper").hide();
+		});
+	});
+</script>

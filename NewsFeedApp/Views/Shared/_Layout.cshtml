@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title</title>
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
+	@Scripts.Render("~/bundles/jquery")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("News Feed Application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Home", "Index", "Home")</li>
+					
+				</ul>
+            </div>
+        </div>
+    </div>
+	<div class="container body-content">
+		@RenderBody()
+		<hr />
+		<div class="loader-wrapper" style="display:none">
+			<div class="loader">
+				<div class="balls">
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+		</div>
+
+		<footer>
+            <p>&copy; @DateTime.Now.Year - News Feed Application</p>
+		</footer>
+	</div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+	<script>
+		$(document).ready(function () {
+        
+			$(document).on('focus', '.txtDate', function () {
+				$(this).datepicker({
+					language: 'en',
+					format: "dd/mm/yyyy",
+					autoclose: true
+
+				});
+			});
+
+		});
+		$(document).on("blur", ".form-control", function () {
+			//console.log($(this.val()));
+			if ($(this).val() != null && $(this).val() != "" && $(this).val() != undefined) {
+				$(this).removeClass("border-required");
+			}
+		});
+
+		$(document).on("change", ".txtDate", function () {
+			if ($(this).val() != null && $(this).val() != "" && $(this).val() != undefined) {
+				$(this).removeClass("border-required");
+			}
+		});
+		var MSGBox = function (msg, type, title) {
+
+			var html = "";
+
+			if (type == "danger") {
+				html = "<div class='alert alert-danger' role='alert'><i class='fa fa-times closeAlert' aria-hidden='true'></i><h4 class='alert-heading'>" + title + "</h4><p>" + msg + "</p></div>";
+			}
+			else if (type = "success") {
+				html = "<div class='alert alert-success' role='alert'><i class='fa fa-times closeAlert' aria-hidden='true'></i><h4 class='alert-heading'>" + title + "</h4><p>" + msg + "</p></div>";
+			}
+
+			return html;
+		};
+
+		function noNumbers(e) {
+			if (e.keyCode != 13) {
+				if ((e.keyCode <= 47) || (e.keyCode >= 58)) {
+					e.returnValue = false;
+					e.preventDefault();
+				}
+			}
+			else {
+				e.returnValue = false;
+				e.preventDefault();
+			}
+		}
+	</script>
+</body>
+</html>

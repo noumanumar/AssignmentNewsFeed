@@ -1,0 +1,13 @@
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\obj\Debug\NewsFeedApp.Data.csproj.CoreCompileInputs.cache
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\obj\Debug\NewsFeedApp.Data.csproj.AssemblyReference.cache
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\bin\Debug\NewsFeedApp.Data.dll
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\bin\Debug\NewsFeedApp.Data.pdb
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\bin\Debug\Dapper.dll
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\bin\Debug\NewsFeedApp.Common.dll
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\bin\Debug\Newtonsoft.Json.dll
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\bin\Debug\NewsFeedApp.Common.pdb
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\bin\Debug\Dapper.xml
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\bin\Debug\Newtonsoft.Json.xml
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\obj\Debug\NewsFeedApp.Data.csproj.CopyComplete
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\obj\Debug\NewsFeedApp.Data.dll
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Data\obj\Debug\NewsFeedApp.Data.pdb

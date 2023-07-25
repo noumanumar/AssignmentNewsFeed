@@ -1,0 +1,5 @@
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Common\obj\Debug\NewsFeedApp.Common.csproj.CoreCompileInputs.cache
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Common\bin\Debug\NewsFeedApp.Common.dll
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Common\bin\Debug\NewsFeedApp.Common.pdb
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Common\obj\Debug\NewsFeedApp.Common.dll
+E:\Personal\Interview Assignments\NewsFeedApp\NewsFeedApp.Common\obj\Debug\NewsFeedApp.Common.pdb
