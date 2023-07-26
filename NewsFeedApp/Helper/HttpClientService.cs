@@ -40,6 +40,9 @@ namespace NewsFeedApp.Helper
 
             request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue("en"));
 
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "NewsFeedApp");
+
             var response = _httpClient.SendAsync(request).Result;
             var apiResponse = new ApiResponse<T>(response.StatusCode);
 

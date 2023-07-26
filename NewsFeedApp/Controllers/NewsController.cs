@@ -24,13 +24,21 @@ namespace NewsFeedApplication.Controllers
         {
             //var newsList = _service.GetAllNews();
             var searchText = ConfigurationManager.AppSettings["DefaultSearchKeyword"].ToString();
-            var rssFeeds = _service.GetRssFeeds(searchText);
-
-            var model = new NewsViewModel 
+            var model = new NewsViewModel();
+            try
             {
-                //NewsList = newsList,
-                RssFeeds = rssFeeds.ToList()
-            };
+                var rssFeeds = _service.GetRssFeeds(searchText);
+                model = new NewsViewModel
+                {
+                    //NewsList = newsList,
+                    RssFeeds = rssFeeds.ToList()
+                };
+            }
+            catch(Exception e)
+            {
+                ///Todo: Exception logging
+            }
+            
             //model.UserId = Session["UserId"].ToString();
             //_userId = model.UserId;
             return View("~/Views/News/Index.cshtml", model);
