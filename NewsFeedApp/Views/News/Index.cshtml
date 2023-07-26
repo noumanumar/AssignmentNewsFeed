@@ -8,8 +8,11 @@
 
 <div class="row">
     <div id="mainDv" class="col-6 mx-auto">
-        <div class="text-right py-2">
-            <input type="text" id="txtSearch" class="" />
+        <div class="display-inline text-left py-2 ">
+            <button type="button" id="btnRefreshNews" class="btn btn-danger toggle-row mb-1rem">Pull Latest News</button>
+        </div>
+        <div class="display-inline text-right py-2 ml-50">
+            <input type="text" id="txtSearch" />
             <button type="button" id="btnSearchNews" class="btn btn-danger toggle-row mb-1rem">Search News</button>
         </div>
         <ul class="list-group list-group-flush news-list">
@@ -25,52 +28,39 @@
     $(document).ready(function () {
 
         $('#btnSearchNews').on("click", function (e) {
-            e.preventDefault();  // prevent standard form submission
+            e.preventDefault();
 
+            var searchText = $('#txtSearch').val() == undefined || $('#txtSearch').val() == '' ? '@ConfigurationManager.AppSettings["DefaultSearchKeyword"].ToString()' : $('#txtSearch').val();
+            searchNews(searchText);
+
+        });
+        $('#btnRefreshNews').on("click", function (e) {
+            e.preventDefault();
+
+            var defaultText = '@ConfigurationManager.AppSettings["DefaultSearchKeyword"].ToString()';
+            console.log(defaultText);
+            searchNews(defaultText);
+        });
+    });
+    function searchNews(searchText) {
+          var url = '@VirtualPathUtility.ToAbsolute("~/")news/SearchNews?searchText=' + searchText;
             $(".loader-wrapper").show();
-
-            var searchText = $('#txtSearch').val() == undefined || $('#txtSearch').val() == '' ? @ConfigurationManager.AppSettings["DefaultSearchKeyword"].ToString() : $('#txtSearch').val();
-            var url = '@VirtualPathUtility.ToAbsolute("~/")news/SearchNews?searchText=' + searchText;
 
             $.get(url, function (result) {
                 if (result.success) {
                     $(".loader-wrapper").hide();
                     if (result.message == 'Success') {
                         createList(result.data);
-
-                        //console.log(result.data);
-                        //var news = JSON.parse(result.data);
-                        //let newsList = [];
-
-                        //$.each(result.data, function (index, value) {
-                        //    console.log(this.Heading);
-                        //    newsList.push(value.Type);
-                        //    arrData = result.data;
-
-                        //    $('.news-list').html('');
-
-                        //    $('.news-list').append('<li class="px-0 list-group-item" style="cursor: pointer;" data-id="' + this.userId + '">' + this.userId + ' ( ' + this.companyName + ' )</li>');
-
-
-                        //    $("#imgUrl").html(this.Image);
-                        //    $("#newsTitle").html(this.Heading);
-                        //    $("#newsDesc").html(this.Description);
-                        //    $("#newsPubDate").html(this.PublishDate);
-                        //    $("#newsAuthor").html(this.Author);
-                        //});
                     }
                 }
             }).done(function () {
                 $(".loader-wrapper").hide();
             });
+    }
 
-          });
-    });
     function createList(data) {
         console.log(data);
         $('.news-list').html('');
-        //const element = document.getElementById("mainUl");
-        //element.remove();
 
         const mainUL = document.createElement('ul');
         mainUL.className = "list-group list-group-flush news-list";

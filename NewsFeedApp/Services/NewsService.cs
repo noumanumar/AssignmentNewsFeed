@@ -126,7 +126,7 @@ namespace NewsFeedApp.Services
                         Heading = x.title,
                         Image = x.urlToImage,
                         Link = x.url,
-                        PublishDate = x.publishedAt,
+                        PublishDate = x.publishedAt.ToString("MMMM dd, yyyy"),
                         Content = x.content
                     };
                     rssFeedData.Add(data);
