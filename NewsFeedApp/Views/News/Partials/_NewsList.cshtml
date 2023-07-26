@@ -1,25 +1,10 @@
-﻿@model List<NewsFeedApplication.Common.News>
-<table class="table" id="tblBooks">
-	<thead>
-		<tr class="wow fadeInUp">
-            <th scope="col">News Title</th>
-            <th scope="col">News Details</th>
-			<th scope="col">Publish Date</th>
-			<th scope="col">Author</th>
-			<th scope="col">Image</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model)
-		{
-        <tr>
-            <td>@item.NewsTitle</td>
-            <td>@item.NewsDetails</td>
-            <td>@item.NewsPublishDate</td>
-            <td>@item.NewsAuthor</td>
-            <td> <img src="@item.NewsBigImageUrl" alt="NewsImage" /> </td>
-           
-        </tr>
-		}
-	</tbody>
-</table>
+﻿@model NewsFeedApp.Models.RssFeed
+
+<li class="list-group-item" data-bs-toggle="modal" data-bs-target="#newsModal">
+    <img src="@Model.Image" alt="img1" class="me-2" />
+    <div class="news-detail">
+        <h5>@Model.Heading</h5>
+        <p class="mb-1">@Model.Description </p>
+        <div class="meta"><small class="d-inline-block me-2">  Created on @Model.PublishDate.ToString("MMMM dd, yyy") </small><small> by @Model.Author </small></div>
+    </div>
+</li>

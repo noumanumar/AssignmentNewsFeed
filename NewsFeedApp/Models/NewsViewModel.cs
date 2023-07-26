@@ -12,6 +12,7 @@ namespace NewsFeedApp.Models
     {
         public List<News> NewsList { get; set; }
         public string UserId { get; set; }
+        public List<RssFeed> RssFeeds { get; set; }
     }
 
     public class AddNewsViewModel

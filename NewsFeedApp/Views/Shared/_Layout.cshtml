@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title</title>
-	@Styles.Render("~/Content/css")
-	@Scripts.Render("~/bundles/modernizr")
-	@Scripts.Render("~/bundles/jquery")
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 
 </head>
 <body>
@@ -18,48 +18,55 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("News Feed Application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("News Feed Application", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li>@Html.ActionLink("Home", "Index", "Home")</li>
+					<li>@Html.ActionLink("Home", "Index", "News")</li>
 					
 				</ul>
             </div>
         </div>
     </div>
-	<div class="container body-content">
-		@RenderBody()
-		<hr />
-		<div class="loader-wrapper" style="display:none">
-			<div class="loader">
-				<div class="balls">
-					<div></div>
-					<div></div>
-					<div></div>
-				</div>
-			</div>
-		</div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <div class="loader-wrapper" style="display:none">
+            <div class="loader">
+                <div class="balls">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
 
-		<footer>
+        <!-- Modal -->
+        <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newsModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body news-body">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <footer>
             <p>&copy; @DateTime.Now.Year - News Feed Application</p>
-		</footer>
-	</div>
+        </footer>
+    </div>
 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 	<script>
 		$(document).ready(function () {
         
-			$(document).on('focus', '.txtDate', function () {
-				$(this).datepicker({
-					language: 'en',
-					format: "dd/mm/yyyy",
-					autoclose: true
-
-				});
-			});
-
 		});
 		$(document).on("blur", ".form-control", function () {
 			//console.log($(this.val()));
@@ -87,18 +94,11 @@
 			return html;
 		};
 
-		function noNumbers(e) {
-			if (e.keyCode != 13) {
-				if ((e.keyCode <= 47) || (e.keyCode >= 58)) {
-					e.returnValue = false;
-					e.preventDefault();
-				}
-			}
-			else {
-				e.returnValue = false;
-				e.preventDefault();
-			}
-		}
+        $('.news-list .list-group-item').on('click', function () {
+            var listOuterHtml = $(this).html();
+            $('#newsModal .news-body').html(listOuterHtml);
+            //$(this).children().addClass('toggle-news-list');
+        })
 	</script>
 </body>
 </html>

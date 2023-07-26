@@ -1,0 +1,126 @@
+﻿@using System.Configuration;
+@model NewsFeedApp.Models.NewsViewModel
+
+@{
+    ViewBag.Title = "Latest News";
+}
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div id="mainDv" class="col-6 mx-auto">
+        <div class="text-right py-2">
+            <input type="text" id="txtSearch" class="" />
+            <button type="button" id="btnSearchNews" class="btn btn-danger toggle-row mb-1rem">Search News</button>
+        </div>
+        <ul class="list-group list-group-flush news-list">
+            @foreach (var model in Model.RssFeeds)
+            {
+                @Html.Partial("~/Views/News/Partials/_NewsList.cshtml", model)
+            }
+        </ul>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#btnSearchNews').on("click", function (e) {
+            e.preventDefault();  // prevent standard form submission
+
+            $(".loader-wrapper").show();
+
+            var searchText = $('#txtSearch').val() == undefined || $('#txtSearch').val() == '' ? @ConfigurationManager.AppSettings["DefaultSearchKeyword"].ToString() : $('#txtSearch').val();
+            var url = '@VirtualPathUtility.ToAbsolute("~/")news/SearchNews?searchText=' + searchText;
+
+            $.get(url, function (result) {
+                if (result.success) {
+                    $(".loader-wrapper").hide();
+                    if (result.message == 'Success') {
+                        createList(result.data);
+
+                        //console.log(result.data);
+                        //var news = JSON.parse(result.data);
+                        //let newsList = [];
+
+                        //$.each(result.data, function (index, value) {
+                        //    console.log(this.Heading);
+                        //    newsList.push(value.Type);
+                        //    arrData = result.data;
+
+                        //    $('.news-list').html('');
+
+                        //    $('.news-list').append('<li class="px-0 list-group-item" style="cursor: pointer;" data-id="' + this.userId + '">' + this.userId + ' ( ' + this.companyName + ' )</li>');
+
+
+                        //    $("#imgUrl").html(this.Image);
+                        //    $("#newsTitle").html(this.Heading);
+                        //    $("#newsDesc").html(this.Description);
+                        //    $("#newsPubDate").html(this.PublishDate);
+                        //    $("#newsAuthor").html(this.Author);
+                        //});
+                    }
+                }
+            }).done(function () {
+                $(".loader-wrapper").hide();
+            });
+
+          });
+    });
+    function createList(data) {
+        console.log(data);
+        $('.news-list').html('');
+        //const element = document.getElementById("mainUl");
+        //element.remove();
+
+        const mainUL = document.createElement('ul');
+        mainUL.className = "list-group list-group-flush news-list";
+        for (let i = 0; i < data.length; i++) {
+            const newsLI = document.createElement('li');
+            newsLI.className = "list-group-item";
+            newsLI.setAttribute("data-bs-toggle", "modal");
+            newsLI.setAttribute("data-bs-target", "#newsModal");
+
+            const img = document.createElement('img');
+            img.className = "me-2";
+            img.setAttribute("src", data[i].Image);
+            newsLI.appendChild(img);
+
+            const divDetail = document.createElement('div');
+            divDetail.className = "news-detail";
+
+            const heading = document.createElement('h5');
+            heading.innerHTML = data[i].Heading;
+            divDetail.appendChild(heading);
+
+            const para = document.createElement('p');
+            para.className = "mb-1";
+            para.innerHTML = data[i].Description;
+            divDetail.appendChild(para);
+
+            const divMeta = document.createElement('div');
+            divMeta.className = "meta";
+
+            const smallPubDate = document.createElement('small');
+            smallPubDate.className = "d-inline-block me-2";
+            smallPubDate.innerHTML = "Created on " + data[i].PublishDate;
+            divMeta.appendChild(smallPubDate);
+
+            const smallAuthor = document.createElement('small');
+            smallAuthor.innerHTML = " by " + data[i].Author;
+            divMeta.appendChild(smallAuthor);
+
+            // append divMeta list to divDetail
+            divDetail.appendChild(divMeta);
+
+            // append divDetail list to newsLI
+            newsLI.appendChild(divDetail);
+
+            // append newsLI list to mainUL
+            mainUL.appendChild(newsLI);
+        }
+        // append mainUL to body
+        var div = document.getElementById('mainDv');
+        //div.innerHTML += mainUL;
+        div.appendChild(mainUL);
+    }
+</script>

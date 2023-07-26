@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewsFeedApp
+namespace NewsFeedApp.Services
 {
     public interface IHomeService
     {

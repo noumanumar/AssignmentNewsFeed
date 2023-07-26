@@ -5,6 +5,7 @@ using NewsFeedApp.Models;
 using NewsFeedApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,15 +22,18 @@ namespace NewsFeedApplication.Controllers
         }
         public ActionResult Index()
         {
-            if (Session["UserId"] == null)
+            //var newsList = _service.GetAllNews();
+            var searchText = ConfigurationManager.AppSettings["DefaultSearchKeyword"].ToString();
+            var rssFeeds = _service.GetRssFeeds(searchText);
+
+            var model = new NewsViewModel 
             {
-                return View("~/Views/Home/Index.cshtml");
-            }
-            var newsList = _service.GetAllNews();
-            var model = new NewsViewModel { NewsList = newsList };
-            model.UserId = Session["UserId"].ToString();
-            _userId = model.UserId;
-            return View("~/Views/News/ViewAllNews.cshtml", model);
+                //NewsList = newsList,
+                RssFeeds = rssFeeds.ToList()
+            };
+            //model.UserId = Session["UserId"].ToString();
+            //_userId = model.UserId;
+            return View("~/Views/News/Index.cshtml", model);
         }
 
         [HttpGet]
@@ -37,7 +41,7 @@ namespace NewsFeedApplication.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return View("~/Views/Home/Index.cshtml");
+                return View("~/Views/News/Index.cshtml");
             }
             ViewBag.Message = "ViewAllNews";
 
@@ -48,75 +52,35 @@ namespace NewsFeedApplication.Controllers
             model.UserId = _userId;
             return View(model);
         }
+
         [HttpGet]
-        public ActionResult AddNews()
+        public JsonResult SearchNews(string searchText = "")
         {
-            if (Session["UserId"] == null || Session["IsAdmin"].ToString() == "false")
+            if (string.IsNullOrEmpty(searchText))
             {
-                return View("~/Views/Home/Index.cshtml");
-            }
-            ViewBag.Message = "Add News";
-            var model = new AddNewsViewModel();
-            //var categories = _service.GetCategories();
-            //var categoryList = new List<SelectListItem>();
-            //if (categories != null)
-            //{
-            //    var category = categories.Select(
-            //        x => new SelectListItem()
-            //        {
-            //            Value = x.CategoryId.ToString(),
-            //            Text = x.CategoryName
-            //        }).ToList();
-            //    categoryList.AddRange(category);
-            //}
-
-            model.CategoriesList = null;// categoryList;
-            model.NewsModel = new News();
-            _userId = Session["UserId"].ToString();
-            //Session["UserId"] = _userId;
-            model.UserId = _userId;
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public JsonResult AddNews(AddNewsViewModel model)
-        {
-            if (Session["UserId"] == null || Session["IsAdmin"].ToString() == "false")
-            {
-                return Json(new { success = false, message = "Please login to Add News" }, JsonRequestBehavior.AllowGet);
-            }
-            if (model == null || model.NewsModel == null)
-            {
-                return Json(new { success = false, message = "Please enter Book information" }, JsonRequestBehavior.AllowGet);
-            }
-            if (string.IsNullOrEmpty(model.NewsModel.NewsTitle))
-            {
-                return Json(new { success = false, message = "Please enter Headline" }, JsonRequestBehavior.AllowGet);
+                searchText = ConfigurationManager.AppSettings["DefaultSearchKeyword"].ToString();
             }
 
-            _userId = Session["UserId"].ToString();
-            //Session["UserId"] = _userId;
-            model.UserId = _userId;
-
-            model.NewsModel.AddUser = model.UserId;
-            var response = _service.SaveNews(model.NewsModel);
-            if (response)
+            List<RssFeed> rssFeed = null;
+            try
             {
-                return Json(new { success = true, message = "" }, JsonRequestBehavior.AllowGet);
+                rssFeed = _service.GetRssFeeds(searchText);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Exception occurred" }, JsonRequestBehavior.AllowGet);
+
+            }
+            //var response = _service.SaveNews(model.NewsModel);
+
+            if (rssFeed.Any())
+            {
+                return Json(new { success = true, total = 0, message = "Success", data = rssFeed }, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return Json(new { success = false, message = "Error occurred while saving News" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "No data" }, JsonRequestBehavior.AllowGet);
             }
-        }
-
-        [HttpGet]
-        public ActionResult Logout()
-        {
-            Session["UserId"] = null;
-
-            return View("~/Views/Home/Index.cshtml");
         }
     }
 }
