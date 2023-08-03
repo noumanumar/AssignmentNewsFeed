@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
 
 </head>
@@ -21,10 +20,10 @@
                 @Html.ActionLink("News Feed Application", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li>@Html.ActionLink("Home", "Index", "News")</li>
-					
-				</ul>
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "News")</li>
+
+                </ul>
             </div>
         </div>
     </div>
@@ -46,7 +45,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="newsModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="newsModalLabel">News</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body news-body">
@@ -61,44 +60,21 @@
             <p>&copy; @DateTime.Now.Year - News Feed Application</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     @RenderSection("scripts", required: false)
-	<script>
-		$(document).ready(function () {
-        
-		});
-		$(document).on("blur", ".form-control", function () {
-			//console.log($(this.val()));
-			if ($(this).val() != null && $(this).val() != "" && $(this).val() != undefined) {
-				$(this).removeClass("border-required");
-			}
-		});
+    <script>
+        $(document).ready(function () {
 
-		$(document).on("change", ".txtDate", function () {
-			if ($(this).val() != null && $(this).val() != "" && $(this).val() != undefined) {
-				$(this).removeClass("border-required");
-			}
-		});
-		var MSGBox = function (msg, type, title) {
+            $('.news-list .list-group-item').on('click', function () {
+                var listOuterHtml = $(this).html();
+                //console.log(listOuterHtml);
 
-			var html = "";
+                $('#newsModal .news-body').html(listOuterHtml);
+            });
+        });
 
-			if (type == "danger") {
-				html = "<div class='alert alert-danger' role='alert'><i class='fa fa-times closeAlert' aria-hidden='true'></i><h4 class='alert-heading'>" + title + "</h4><p>" + msg + "</p></div>";
-			}
-			else if (type = "success") {
-				html = "<div class='alert alert-success' role='alert'><i class='fa fa-times closeAlert' aria-hidden='true'></i><h4 class='alert-heading'>" + title + "</h4><p>" + msg + "</p></div>";
-			}
 
-			return html;
-		};
-
-        $('.news-list .list-group-item').on('click', function () {
-            var listOuterHtml = $(this).html();
-            $('#newsModal .news-body').html(listOuterHtml);
-            //$(this).children().addClass('toggle-news-list');
-        })
-	</script>
+    </script>
 </body>
 </html>

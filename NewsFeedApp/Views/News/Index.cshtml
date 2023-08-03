@@ -4,10 +4,10 @@
 @{
     ViewBag.Title = "Latest News";
 }
-<h2>@ViewBag.Title</h2>
+@*<h2>@ViewBag.Title</h2>*@
 
 <div class="row">
-    <div id="mainDv" class="col-6 mx-auto">
+    <div id="mainDv" class="col-12 mx-auto mt-20">
         <div class="display-inline text-left py-2 ">
             <button type="button" id="btnRefreshNews" class="btn btn-danger toggle-row mb-1rem">Pull Latest News</button>
         </div>
@@ -15,7 +15,7 @@
             <input type="text" id="txtSearch" />
             <button type="button" id="btnSearchNews" class="btn btn-danger toggle-row mb-1rem">Search News</button>
         </div>
-        <ul class="list-group list-group-flush news-list">
+        <ul class="list-group list-group-flush news-list mt-20">
             @foreach (var model in Model.RssFeeds)
             {
                 @Html.Partial("~/Views/News/Partials/_NewsList.cshtml", model)
@@ -36,7 +36,7 @@
         });
         $('#btnRefreshNews').on("click", function (e) {
             e.preventDefault();
-
+            $('#txtSearch').val('');
             var defaultText = '@ConfigurationManager.AppSettings["DefaultSearchKeyword"].ToString()';
             console.log(defaultText);
             searchNews(defaultText);

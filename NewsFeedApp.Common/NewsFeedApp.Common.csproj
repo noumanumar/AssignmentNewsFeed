@@ -42,9 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Categories.cs" />
     <Compile Include="CommonModels.cs" />
-    <Compile Include="Members.cs" />
     <Compile Include="News.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

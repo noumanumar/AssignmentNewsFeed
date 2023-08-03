@@ -57,7 +57,6 @@ namespace NewsFeedApp.Data.Repository
         //                publishYear = newsDetails.NewsPublishDate,
         //                newsDetail = newsDetails.NewsDetails,
         //                newsImageUrl = newsDetails.NewsImageUrl,
-        //                newsBigImageUrl = newsDetails.NewsBigImageUrl,
         //                newsAuthor = newsDetails.NewsAuthor,
         //                newsLanguage = newsDetails.NewsLanguage,
         //                categoryId = newsDetails.CategoryId,

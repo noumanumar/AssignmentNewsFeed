@@ -15,8 +15,6 @@ namespace NewsFeedApp.Common
         public string NewsDetails { get; set; }
         [Display(Name = "News Image Url")]
         public string NewsImageUrl { get; set; }
-        [Display(Name = "News Big Image Url")]
-        public string NewsBigImageUrl { get; set; }
         [Display(Name = "News Author")]
         public string NewsAuthor { get; set; }
         [Display(Name = "News Publish Date")]
